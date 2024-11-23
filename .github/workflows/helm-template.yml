@@ -39,7 +39,7 @@ jobs:
       # Step 5: Run helm template to render the Kubernetes manifests
       - name: Run helm template
         run: |
-          helm template myapp ./myapp -f ./myapp/values-prod.yaml -f ./my-chart/values-dev.yaml > ./output.yaml
+          helm template myapp ./myapp -f ./myapp/values-prod.yaml -f ./my-app/values-dev.yaml > ./output.yaml
 
       # Step 6: Upload the rendered Kubernetes manifests as an artifact (optional)
       - name: Upload Kubernetes manifests as an artifact
