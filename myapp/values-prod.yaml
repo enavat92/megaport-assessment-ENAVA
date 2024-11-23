@@ -1,0 +1,24 @@
+# Default values for myapp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 3
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+
+
+service:
+  type: ClusterIP
+  port: 80
+
+
+resources: 
+  limits:
+    cpu: 1
+    memory: 1 Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
