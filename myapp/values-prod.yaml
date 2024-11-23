@@ -2,15 +2,17 @@
 
 
 replicaCount: 3
-
+name: prod
+labels:
+  env: prod
 image:
-  label: prod
   repository: nginx
   pullPolicy: IfNotPresent
 
 
 service:
-  label: prod
+  labels:
+    env: prod
   name: service-prod
   type: ClusterIP
   port: 8080
