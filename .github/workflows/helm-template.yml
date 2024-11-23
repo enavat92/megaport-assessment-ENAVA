@@ -1,0 +1,48 @@
+name: Helm Template
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  helm-template:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Helm
+      - name: Set up Helm
+        with:
+          helm-version: 'v3.10.0'  # Specify the desired Helm version
+
+      # Step 3: Cache Helm charts (optional but recommended for large repos)
+      - name: Cache Helm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/helm
+          key: helm-dependencies-${{ runner.os }}-${{ hashFiles('**/Chart.yaml') }}
+          restore-keys: |
+            helm-dependencies-${{ runner.os }}-
+
+      # Step 4: Set up Kubernetes configuration (optional, needed for helm repos)
+      # Uncomment and adjust this step if you're interacting with a Kubernetes cluster
+      # - name: Set up Kubeconfig
+      #   run: echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+
+      # Step 5: Run helm template to render the Kubernetes manifests
+      - name: Run helm template
+        run: |
+          helm template myapp ./myapp -f ./myapp/values-prod.yaml -f ./my-chart/values-dev.yaml > ./output.yaml
+
+      # Step 6: Upload the rendered Kubernetes manifests as an artifact (optional)
+      - name: Upload Kubernetes manifests as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rendered-manifests
+          path: ./output.yaml
