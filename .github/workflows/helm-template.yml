@@ -30,12 +30,7 @@ jobs:
           key: helm-dependencies-${{ runner.os }}-${{ hashFiles('**/Chart.yaml') }}
           restore-keys: |
             helm-dependencies-${{ runner.os }}-
-
-      # Step 4: Set up Kubernetes configuration (optional, needed for helm repos)
-      # Uncomment and adjust this step if you're interacting with a Kubernetes cluster
-      # - name: Set up Kubeconfig
-      #   run: echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-
+            
       # Step 5: Run helm template to render the Kubernetes manifests
       - name: Run helm templates
         run: |
