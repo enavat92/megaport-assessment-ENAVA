@@ -6,7 +6,7 @@ metadata:
     app: {{ .Release.Name }}
     env: {{ .Values.labels.env }}
 spec:
-  replicas: {{ .Values.env.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name}}
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: {{ .Release.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.env.image }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.targetPort }}
