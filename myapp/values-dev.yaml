@@ -2,16 +2,18 @@
 
 
 replicaCount: 1
-
-image:
-  label: dev  
+name: dev
+labels:
+  env: dev
+image: 
   repository: nginx
   pullPolicy: IfNotPresent
 
 
 service:
   name: service-dev
-  label: dev
+  labels:
+    env: dev
   type: ClusterIP
   port: 8080
   targetPort: 8080
