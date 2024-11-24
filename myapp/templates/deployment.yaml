@@ -1,23 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: {{ .Release.Name }}-deployment-{{ .Values.labels.env }}
   labels:
     app: {{ .Release.Name }}
+    env: {{ .Values.labels.env }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.env.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ .Release.Name}}
+      env: {{ .Values.labels.env }}
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}
+        env: {{ .Values.labels.env }}
     spec:
       containers:
         - name: {{ .Release.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.env.image }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.targetPort }}
-          resources: {{ .Values.resources | nindent 12 }}
+          resources: {{ .ToYaml .Values.resources | nindent 12 }}

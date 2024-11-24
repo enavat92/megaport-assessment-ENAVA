@@ -11,9 +11,9 @@ image:
 
 
 service:
+  name: service-prod
   labels:
     env: prod
-  name: service-prod
   type: ClusterIP
   port: 8080
   targetPort: 8080
